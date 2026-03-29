@@ -87,7 +87,7 @@ GET /webhook/products
   - Code
   - Respond to Webhook
 - Endpoint: /products
-- API: https://dummyjson.com/products?limit=100
+- API: https://dummyjson.com/products?limit=200
   - Activar workflow
   - Copiar Production URL
 
