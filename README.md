@@ -16,6 +16,7 @@ Se utilizó una arquitectura híbrida:
 - 🌐 Google Apps Script como frontend (Web App)
 
 ## 🏗️ Arquitectura
+```
 Usuario
 ↓
 Apps Script (Frontend)
@@ -27,6 +28,7 @@ DummyJSON API
 n8n transforma datos
 ↓
 Apps Script renderiza UI
+```
 
 ## 🧰Tecnologías usadas
 
