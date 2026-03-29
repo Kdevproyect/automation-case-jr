@@ -1,1 +1,362 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <style>
+      /* ===== Estilos base de la página ===== */
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f7fb;
+        margin: 0;
+        padding: 0;
+        color: #1f2937;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 20px;
+      }
+
+      h1 {
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        color: #6b7280;
+        margin-bottom: 24px;
+      }
+
+      /* ===== Sección de filtros ===== */
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 24px;
+        background: white;
+        padding: 16px;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+
+      input,
+      select,
+      button {
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 14px;
+      }
+
+      input,
+      select {
+        flex: 1;
+        min-width: 220px;
+      }
+
+      button {
+        background: #111827;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        opacity: 0.92;
+      }
+
+      #clearBtn {
+        background: #e5e7eb;
+        color: #111827;
+      }
+
+      #clearBtn:hover {
+        opacity: 0.92;
+      }
+
+      /* ===== Texto de estado y contenedores vacíos ===== */
+      .status {
+        margin-bottom: 20px;
+        color: #4b5563;
+      }
+
+      .results-placeholder {
+        background: white;
+        padding: 24px;
+        border-radius: 14px;
+        text-align: center;
+        color: #6b7280;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+
+      .empty {
+        background: white;
+        padding: 24px;
+        border-radius: 14px;
+        text-align: center;
+        color: #6b7280;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+
+      /* ===== Grid y tarjetas de productos ===== */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 280px));
+        justify-content: center;
+        gap: 18px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .card img {
+        width: 100%;
+        height: 220px;
+        object-fit: contain;
+        background: #f3f4f6;
+        display: block;
+      }
+
+      .card-body {
+        padding: 16px;
+      }
+
+      .badge {
+        display: inline-block;
+        background: #eef2ff;
+        color: #4338ca;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      .title {
+        font-size: 17px;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #374151;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Encabezado principal de la aplicación -->
+      <h1>Búsqueda de Productos</h1>
+
+      <div class="subtitle">
+        Explora productos usando Google Apps Script + n8n + API
+      </div>
+
+      <!-- Filtros de búsqueda -->
+      <div class="filters">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Buscar producto..."
+        />
+
+        <select id="categorySelect">
+          <option value="">Todas las categorías</option>
+        </select>
+
+        <button id="searchBtn">Buscar</button>
+        <button id="clearBtn" type="button">Limpiar</button>
+      </div>
+
+      <!-- Texto que informa el estado actual de la consulta -->
+      <div class="status" id="status">
+        Usa los filtros para consultar productos.
+      </div>
+
+      <!-- Contenedor donde se renderizan dinámicamente los resultados -->
+      <div id="results">
+        <div class="results-placeholder">
+          Aquí aparecerán los productos cuando conectemos la lógica.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /**
+       * Realiza la consulta principal de productos al backend.
+       * Obtiene los valores actuales de búsqueda y categoría.
+       * Actualiza el estado visual de la interfaz y llama a Apps Script mediante google.script.run.
+       */
+      function loadProducts() {
+        const search = document.getElementById("searchInput").value.trim();
+        const category = document.getElementById("categorySelect").value;
+
+        // Feedback visual mientras se procesa la consulta
+        document.getElementById("status").textContent = "Cargando productos...";
+        document.getElementById("results").innerHTML = `
+          <div class="empty">
+            Cargando productos...
+          </div>
+        `;
+
+        // Llamada asíncrona al backend de Apps Script
+        google.script.run
+          .withSuccessHandler(handleProductsResponse)
+          .getProducts(category, search);
+      }
+
+      /**
+       * Restablece los filtros a su estado inicial y vuelve a cargar la lista completa de productos.
+       */
+      function clearFilters() {
+        document.getElementById("searchInput").value = "";
+        document.getElementById("categorySelect").value = "";
+        loadProducts();
+      }
+
+      /**
+       * Procesa la respuesta del backend para la consulta de productos.
+       * Maneja escenarios de error, lista vacía  y renderización exitosa de tarjetas.
+       */
+      function handleProductsResponse(response) {
+        const status = document.getElementById("status");
+        const results = document.getElementById("results");
+
+        // Si el backend responde con error, se muestra el mensaje correspondiente
+        if (!response.success) {
+          status.textContent = "Ocurrió un error al consultar productos.";
+          results.innerHTML = `
+            <div class="empty">
+              <strong>Error:</strong><br>
+              ${response.message || "No se pudo obtener la información."}
+            </div>
+          `;
+          return;
+        }
+
+        // Actualiza el estado con la cantidad de productos encontrados
+        status.textContent = `Se encontraron ${response.count} producto(s).`;
+
+        // Si no hay resultados, se informa al usuario
+        if (!response.data || response.data.length === 0) {
+          results.innerHTML = `
+            <div class="empty">
+              No se encontraron productos con los filtros aplicados.
+            </div>
+          `;
+          return;
+        }
+
+        // Genera dinámicamente las tarjetas de productos a partir de la respuesta
+        const cards = response.data
+          .map(
+            (product) => `
+          <div class="card">
+            <img src="${product.thumbnail}" alt="${product.title}">
+            <div class="card-body">
+              <div class="badge">${product.category}</div>
+              <div class="title">${product.title}</div>
+              <div class="meta">
+                <span>${formatPrice(product.price)}</span>
+                <span>⭐ ${product.rating}</span>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+
+        // Inserta el grid final dentro del contenedor de resultados
+        results.innerHTML = `<div class="grid">${cards}</div>`;
+      }
+
+      /**
+       * Registra los eventos principales de la interfaz:
+       * - clic en buscar
+       * - clic en limpiar
+       * - Enter en el input de búsqueda
+       * - cambio de categoría
+       */
+      function setupEvents() {
+        document
+          .getElementById("searchBtn")
+          .addEventListener("click", loadProducts);
+
+        document
+          .getElementById("clearBtn")
+          .addEventListener("click", clearFilters);
+
+        document
+          .getElementById("searchInput")
+          .addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+              loadProducts();
+            }
+          });
+
+        document
+          .getElementById("categorySelect")
+          .addEventListener("change", loadProducts);
+      }
+
+      /**
+       * Formatea el precio para mostrarlo con dos decimales.
+       */
+      function formatPrice(value) {
+        return `$${Number(value).toFixed(2)}`;
+      }
+
+      /**
+       * Solicita al backend la lista de categorías disponibles para poblar el selector del frontend.
+       */
+      function loadCategories() {
+        google.script.run
+          .withSuccessHandler(handleCategoriesResponse)
+          .getCategories();
+      }
+
+      /**
+       * Procesa la respuesta del backend para las categorías y llena dinámicamente el select del filtro.
+       */
+      function handleCategoriesResponse(response) {
+        const select = document.getElementById("categorySelect");
+
+        // Si ocurre un error, se registra en consola
+        if (!response.success) {
+          console.error("Error cargando categorías");
+          return;
+        }
+
+        // Agrega cada categoría como una nueva opción del select
+        response.data.forEach((category) => {
+          const option = document.createElement("option");
+          option.value = category;
+          option.textContent =
+            category.charAt(0).toUpperCase() + category.slice(1);
+          select.appendChild(option);
+        });
+      }
+
+      /**
+       * Punto de entrada de la aplicación.
+       * Configura eventos, carga categorías y muestra los productos iniciales al abrir la web app.
+       */
+      window.onload = function () {
+        setupEvents();
+        loadCategories();
+        loadProducts();
+      };
+    </script>
+  </body>
+</html>
