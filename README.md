@@ -6,14 +6,14 @@ Web App de exploración de productos usando n8n + Google Apps Script + API públ
 
 Esta solución implementa una aplicación web que permite explorar productos mediante:
 
-🔍 búsqueda por texto
-🏷️ filtro por categoría
-🧾 visualización en tarjetas
+- 🔍 búsqueda por texto
+- 🏷️ filtro por categoría
+-🧾 visualización en tarjetas
 
 Se utilizó una arquitectura híbrida:
 
-⚙️ n8n como backend (automatización y transformación de datos)
-🌐 Google Apps Script como frontend (Web App)
+- ⚙️ n8n como backend (automatización y transformación de datos)
+- 🌐 Google Apps Script como frontend (Web App)
 
 ## 🏗️ Arquitectura
 Usuario
