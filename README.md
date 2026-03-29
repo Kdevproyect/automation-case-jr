@@ -38,8 +38,9 @@ Apps Script renderiza UI
 - 📦 DummyJSON API (https://dummyjson.com/docs/products)
 
 ## ⚙️ Backend — n8n
-```
+
 🔹 Funcionalidad
+```
 - Webhook GET (/products)
 - Consumo de API pública
 - Filtros dinámicos:
