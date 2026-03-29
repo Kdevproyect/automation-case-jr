@@ -82,7 +82,6 @@ GET /webhook/products
 ## 🚀 Cómo ejecutar
 1️⃣ Configurar n8n
 - Crear workflow con:
-  
   - Webhook
   - HTTP Request
   - Code
