@@ -40,15 +40,12 @@ Apps Script renderiza UI
 ## ⚙️ Backend — n8n
 
 🔹 Funcionalidad
-```
 - Webhook GET (/products)
 - Consumo de API pública
-- Filtros dinámicos:
-    .category
-    .search
+- Filtros dinámicos: category y search
 - Transformación de datos
 - Respuesta JSON estructurada
-```
+  
 🔹 Endpoint
 ```
 GET /webhook/products
