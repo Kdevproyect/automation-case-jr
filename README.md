@@ -86,12 +86,10 @@ GET /webhook/products
   - HTTP Request
   - Code
   - Respond to Webhook
-Endpoint:
-/products
-API:
-https://dummyjson.com/products?limit=100
-Activar workflow
-Copiar Production URL
+- Endpoint: /products
+- API: https://dummyjson.com/products?limit=100
+  - Activar workflow
+  - Copiar Production URL
 
 
 
