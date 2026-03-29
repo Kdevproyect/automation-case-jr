@@ -1,0 +1,110 @@
+{
+  "name": "Test Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "products",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -352,
+        -144
+      ],
+      "id": "afbd6efb-4aff-4220-a485-f1b4b676cb9e",
+      "name": "Webhook",
+      "webhookId": "332bc3b9-504e-428a-938f-ea74f1b7ffdf"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        240,
+        -144
+      ],
+      "id": "6a4a6d34-ef7d-4c4f-a2b9-e801c82eefa6",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "url": "https://dummyjson.com/products?limit=200",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -160,
+        -144
+      ],
+      "id": "ae38daf7-7989-4bcc-9b77-31ed2acdf30f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Leer query params desde el Webhook\nconst query = $node[\"Webhook\"].json.query || {};\n\nconst category = (query.category || \"\").toLowerCase().trim();\nconst search = (query.search || \"\").toLowerCase().trim();\n\n// 2. Obtener productos desde la API\nconst products = $json.products || [];\n\n// 3. Aplicar filtros\nlet filtered = products;\n\nif (category) {\n  filtered = filtered.filter(product =>\n    (product.category || \"\").toLowerCase() === category\n  );\n}\n\nif (search) {\n  filtered = filtered.filter(product =>\n    (product.title || \"\").toLowerCase().includes(search) ||\n    (product.description || \"\").toLowerCase().includes(search)\n  );\n}\n\n// 4. Transformar la data final\nconst transformed = filtered.map(product => ({\n  /**\n  title: product.title,\n  price: product.price,\n  rating: product.rating\n  **/\n  id: product.id,\n  title: product.title,\n  category: product.category,\n  price: product.price,\n  rating: product.rating,\n  thumbnail: product.thumbnail\n}));\n\n// 5. Retornar respuesta estructurada\nreturn [\n  {\n    json: {\n      success: true,\n      count: transformed.length,\n      filters: {\n        category: category || null,\n        search: search || null\n      },\n      data: transformed\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        -144
+      ],
+      "id": "f131c3ef-ca12-4fe2-8b27-a9bee6f219e7",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9c033094-b8e8-4a85-ae0e-6935e1ec5c80",
+  "meta": {
+    "instanceId": "ce855727568a43085cdffb83a625a119d6f16a5a616c5326543ad1b10436835c"
+  },
+  "id": "Lo6oAMdZDE7GjI3n",
+  "tags": []
+}
