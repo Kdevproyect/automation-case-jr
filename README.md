@@ -28,14 +28,14 @@ n8n transforma datos
    ↓
 Apps Script renderiza UI
 
-##🧰Tecnologías usadas
+## 🧰Tecnologías usadas
 
 ⚙️ n8n (self-hosted)
 🌐 Google Apps Script
 💻 HTML / CSS / JavaScript
 📦 DummyJSON API (https://dummyjson.com/docs/products)
 
-##⚙️ Backend — n8n
+## ⚙️ Backend — n8n
 
 🔹 Funcionalidad
 - Webhook GET (/products)
