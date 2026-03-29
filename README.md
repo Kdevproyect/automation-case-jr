@@ -30,10 +30,10 @@ Apps Script renderiza UI
 
 ## 🧰Tecnologías usadas
 
-⚙️ n8n (self-hosted)
-🌐 Google Apps Script
-💻 HTML / CSS / JavaScript
-📦 DummyJSON API (https://dummyjson.com/docs/products)
+- ⚙️ n8n (self-hosted)
+- 🌐 Google Apps Script
+- 💻 HTML / CSS / JavaScript
+- 📦 DummyJSON API (https://dummyjson.com/docs/products)
 
 ## ⚙️ Backend — n8n
 
