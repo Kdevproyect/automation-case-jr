@@ -79,6 +79,19 @@ GET /webhook/products
 🏷️ filtro dinámico
 ♻️ limpiar filtros
 
+## 🚀 Cómo ejecutar
+1️⃣ Configurar n8n
+- Crear workflow con:
+-- Webhook
+-- HTTP Request
+-- Code
+-- Respond to Webhook
+Endpoint:
+/products
+API:
+https://dummyjson.com/products?limit=100
+Activar workflow
+Copiar Production URL
 
 
 
