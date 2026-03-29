@@ -36,6 +36,7 @@ Apps Script renderiza UI
 - Filtros dinámicos: category y search
 - Transformación de datos
 - Respuesta JSON estructurada
+  
 🔹 Endpoint
 ```
 GET /webhook/products
