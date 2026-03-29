@@ -83,10 +83,10 @@ GET /webhook/products
 1️⃣ Configurar n8n
 - Crear workflow con:
   
-- Webhook
-- HTTP Request
-- Code
-- Respond to Webhook
+  - Webhook
+  - HTTP Request
+  - Code
+  - Respond to Webhook
 Endpoint:
 /products
 API:
