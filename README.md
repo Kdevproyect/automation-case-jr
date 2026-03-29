@@ -30,7 +30,7 @@ n8n transforma datos
 Apps Script renderiza UI
 ```
 
-## 🧰Tecnologías usadas
+## 🧰 Tecnologías usadas
 
 - ⚙️ n8n (self-hosted)
 - 🌐 Google Apps Script
@@ -81,3 +81,23 @@ GET /webhook/products
   ]
 }
 ```
+## 🌐 Frontend — Apps Script
+🔹 Funcionalidad
+- Renderizado HTML con doGet()
+- Consumo del webhook de n8n
+- UI con tarjetas de productos
+- Interacciones:
+🔍 búsqueda
+🏷️ filtro dinámico
+♻️ limpiar filtros
+
+
+
+
+
+
+
+
+
+
+
