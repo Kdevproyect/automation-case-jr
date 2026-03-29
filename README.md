@@ -93,9 +93,27 @@ GET /webhook/products
 2️⃣ Configurar Apps Script
 - Crear proyecto
 - Agregar:
-  - Code.gs
+  - code.gs
   - index.html
-  - appsscript.json (Configuracion - Activat: Mostrar el archivo de manifiesto "appsscript.json" en el editor)
+  - appsscript.json (Configuracion - Activar: Mostrar el archivo de manifiesto "appsscript.json" en el editor)
+3️⃣ Implementar Web App
+- Nueva Implementación → Aplicación web
+- Ejecutar como: Yo
+- Quién tiene acceso: Cualquier usuario
+## 🧪 Testing
+- Se utilizó Postman para validar el webhook
+- Pruebas realizadas:
+  - filtros por categoría
+  - búsqueda por texto
+  - combinaciones de ambos
+## 🔮 Mejoras futuras
+- 📄 Paginación
+- 🔎 Vista de detalle
+- ⚡ Cache de resultados
+- 🔐 Autenticación
+- 🎨 Mejoras UI/UX
+## 👨‍💻 Autor
+Kevin Salcedo
 
 
 
