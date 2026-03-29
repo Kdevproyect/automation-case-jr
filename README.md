@@ -1,8 +1,8 @@
-🚀 Automation Case Jr
+## 🚀 Automation Case Jr
 
 Web App de exploración de productos usando n8n + Google Apps Script + API pública
 
-📌 Descripción
+## 📌 Descripción
 
 Esta solución implementa una aplicación web que permite explorar productos mediante:
 
@@ -15,22 +15,62 @@ Se utilizó una arquitectura híbrida:
 ⚙️ n8n como backend (automatización y transformación de datos)
 🌐 Google Apps Script como frontend (Web App)
 
+## 🏗️ Arquitectura
+Usuario
+   ↓
+Apps Script (Frontend)
+   ↓
+Webhook n8n
+   ↓
+DummyJSON API
+   ↓
+n8n transforma datos
+   ↓
+Apps Script renderiza UI
 
+##🧰Tecnologías usadas
 
+⚙️ n8n (self-hosted)
+🌐 Google Apps Script
+💻 HTML / CSS / JavaScript
+📦 DummyJSON API (https://dummyjson.com/docs/products)
 
-Proyecto de automatización de nivel junior enfocado en el desarrollo de una aplicación web para la exploración de productos. La solución permite a los usuarios navegar y encontrar información mediante filtros por categorías y opciones de búsqueda, mejorando la experiencia de consulta.
+##⚙️ Backend — n8n
 
-Se implementa una arquitectura híbrida en la que n8n actúa como motor backend, encargado de consumir y transformar datos provenientes de una API pública, mientras que Google Apps Script funciona como frontend, permitiendo visualizar la información de forma clara e interactiva.
+🔹 Funcionalidad
+- Webhook GET (/products)
+- Consumo de API pública
+- Filtros dinámicos:
+    .category
+    .search
+- Transformación de datos
+- Respuesta JSON estructurada
 
-Arquitectura:
+🔹 Endpoint
+GET /webhook/products
 
-Flujo de la aplicación:
+🔹 Ejemplos
+/webhook/products
+/webhook/products?category=beauty
+/webhook/products?search=powder
+/webhook/products?category=beauty&search=powder
 
-El usuario interactúa con la Web App (Apps Script)
-La Web App envía filtros (category, search) al webhook de n8n
-n8n consume la API pública (DummyJSON)
-n8n filtra y transforma los datos
-n8n devuelve un JSON estructurado
-Apps Script renderiza los productos en la interfaz
-
-
+🔹 Ejemplo de respuesta
+{
+  "success": true,
+  "count": 1,
+  "filters": {
+    "category": "beauty",
+    "search": "powder"
+  },
+  "data": [
+    {
+      "id": 24,
+      "title": "Powder Canister",
+      "category": "beauty",
+      "price": 14.99,
+      "rating": 4.64,
+      "thumbnail": "https://..."
+    }
+  ]
+}
