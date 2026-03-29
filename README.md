@@ -38,7 +38,7 @@ Apps Script renderiza UI
 - 📦 DummyJSON API (https://dummyjson.com/docs/products)
 
 ## ⚙️ Backend — n8n
-
+```
 🔹 Funcionalidad
 - Webhook GET (/products)
 - Consumo de API pública
@@ -47,7 +47,7 @@ Apps Script renderiza UI
     .search
 - Transformación de datos
 - Respuesta JSON estructurada
-
+```
 🔹 Endpoint
 ```
 GET /webhook/products
