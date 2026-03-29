@@ -90,7 +90,12 @@ GET /webhook/products
 - API: https://dummyjson.com/products?limit=200
   - Activar workflow
   - Copiar Production URL
-
+2️⃣ Configurar Apps Script
+- Crear proyecto
+- Agregar:
+  - Code.gs
+  - index.html
+  - appsscript.json (Configuracion - Activat: Mostrar el archivo de manifiesto "appsscript.json" en el editor)
 
 
 
