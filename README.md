@@ -98,6 +98,8 @@ GET /webhook/products
   - code.gs
   - index.html
   - appsscript.json (Configuracion - Activar: Mostrar el archivo de manifiesto "appsscript.json" en el editor)
+
+Actualizar: const N8N_WEBHOOK_URL = "TU_URL_PRODUCCION_DE_N8N"
   
 3️⃣ Implementar Web App
 - Nueva Implementación → Aplicación web
