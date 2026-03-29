@@ -49,15 +49,18 @@ Apps Script renderiza UI
 - Respuesta JSON estructurada
 
 🔹 Endpoint
+```
 GET /webhook/products
-
+```
 🔹 Ejemplos
+```
 /webhook/products
 /webhook/products?category=beauty
 /webhook/products?search=powder
 /webhook/products?category=beauty&search=powder
-
+```
 🔹 Ejemplo de respuesta
+```
 {
   "success": true,
   "count": 1,
@@ -76,3 +79,4 @@ GET /webhook/products
     }
   ]
 }
+```
