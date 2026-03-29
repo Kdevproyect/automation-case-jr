@@ -8,7 +8,7 @@ Esta solución implementa una aplicación web que permite explorar productos med
 
 - 🔍 búsqueda por texto
 - 🏷️ filtro por categoría
--🧾 visualización en tarjetas
+- 🧾 visualización en tarjetas
 
 Se utilizó una arquitectura híbrida:
 
